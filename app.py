@@ -44,6 +44,17 @@ def generate():
     message = generate_hitokoto(theme)
     return jsonify({"message": message})
 
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/howto")
+def howto():
+    return render_template("howto.html")
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
-
