@@ -47,6 +47,19 @@
             position: absolute;
             left: -9999px;
         }
+        footer {
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        footer a {
+            margin: 0 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -56,6 +69,12 @@
     <div id="result"></div>
     <button id="copyButton" onclick="copyToClipboard()">コピー</button>
     <textarea id="hiddenText"></textarea>
+
+    <footer>
+        <a href="/howto">使い方ガイド</a> |
+        <a href="/privacy">プライバシーポリシー</a> |
+        <a href="/about">開発者について</a>
+    </footer>
 
     <script>
         function generate() {
@@ -96,8 +115,5 @@
             }
         }
     </script>
-    <title>ぜちぜの式 ひとことBot - テスト</title>
-
 </body>
 </html>
-
