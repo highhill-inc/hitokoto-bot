@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ぜちぜの式 ひとことBot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        input, button {
+            font-size: 1rem;
+            padding: 12px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #result {
+            margin-top: 25px;
+            font-size: 1.3rem;
+            color: #333;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            word-wrap: break-word;
+        }
+        #copyButton {
+            display: none;
+            margin-top: 15px;
+            background-color: #28a745;
+        }
+        #hiddenText {
+            position: absolute;
+            left: -9999px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ぜちぜの式 テーマ別ひとことBot</h1>
+    <input type="text" id="themeInput" placeholder="テーマがあれば入力">
+    <button onclick="generate()">ひとこと生成</button>
+    <div id="result"></div>
+    <button id="copyButton" onclick="copyToClipboard()">コピー</button>
+    <textarea id="hiddenText"></textarea>
+
+    <script>
+        function generate() {
+            const theme = document.getElementById("themeInput").value;
+
+            fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ theme: theme })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = data.message;
+                document.getElementById("copyButton").style.display = "inline-block";
+            })
+            .catch(err => {
+                document.getElementById("result").innerText = "エラーが発生しました";
+                document.getElementById("copyButton").style.display = "none";
+                console.error(err);
+            });
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById("result").innerText;
+            const textarea = document.getElementById("hiddenText");
+            textarea.value = text;
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                const btn = document.getElementById("copyButton");
+                btn.innerText = "コピーしました！";
+                setTimeout(() => {
+                    btn.innerText = "コピー";
+                }, 1500);
+            } catch (err) {
+                alert("コピーに失敗しました");
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
